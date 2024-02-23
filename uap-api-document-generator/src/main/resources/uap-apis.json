@@ -1,0 +1,5377 @@
+{
+    "exports": [
+        {
+            "type": "common/header/postMethod/simpleUpload",
+            "definition": [
+                {
+                    "_ref": "common/header/contentType/multipart"
+                },
+                {
+                    "_ref": "common/header/token"
+                },
+                {
+                    "_ref": "common/header/timestamp"
+                }
+            ]
+        },
+        {
+            "type": "common/header/postOrDeleteMethod/simpleUpdate",
+            "definition": [
+                {
+                    "_ref": "common/header/contentType/json"
+                },
+                {
+                    "_ref": "common/header/token"
+                },
+                {
+                    "_ref": "common/header/timestamp"
+                }
+            ]
+        },
+        {
+            "type": "common/header/getMethod/simpleQuery",
+            "definition": [
+                {
+                    "_ref": "common/header/token"
+                },
+                {
+                    "_ref": "common/header/timestamp"
+                }
+            ]
+        },
+        {
+            "type": "common/header/postMethod/pagedQuery",
+            "definition": [
+                {
+                    "_ref": "common/header/contentType/json"
+                },
+                {
+                    "_ref": "common/header/token"
+                },
+                {
+                    "_ref": "common/header/timestamp"
+                },
+                {
+                    "_ref": "common/header/pageIndex"
+                },
+                {
+                    "_ref": "common/header/pageSize"
+                },
+                {
+                    "_ref": "common/header/pageSorts"
+                }
+            ]
+        },
+        {
+            "type": "common/header/contentType/json",
+            "definition": {
+                "name": "Content-Type",
+                "type": "string",
+                "example": "application/json",
+                "desc": "消息体的类型(格式),固定使用application/json",
+                "required": true
+            }
+        },
+        {
+            "type": "common/header/contentType/multipart",
+            "definition": {
+                "name": "Content-Type",
+                "type": "string",
+                "example": "multipart/form-data",
+                "desc": "消息体的类型(格式),固定使用multipart/form-data",
+                "required": true
+            }
+        },
+        {
+            "type": "common/header/token",
+            "definition": {
+                "name": "token",
+                "type": "string",
+                "example": null,
+                "desc": "动态token",
+                "required": true
+            }
+        },
+        {
+            "type": "common/header/timestamp",
+            "definition": {
+                "name": "timestamp",
+                "type": "string",
+                "example": 1675043839423,
+                "desc": "13位时间戳",
+                "required": true
+            }
+        },
+        {
+            "type": "common/header/pageIndex",
+            "definition": {
+                "name": "pageIndex",
+                "type": "string",
+                "example": 0,
+                "desc": "页码,从0开始递增,0表示第一页",
+                "required": false
+            }
+        },
+        {
+            "type": "common/header/pageSize",
+            "definition": {
+                "name": "pageSize",
+                "type": "string",
+                "example": 50,
+                "desc": "分页大小,每页最大条数",
+                "required": false
+            }
+        },
+        {
+            "type": "common/header/pageSorts",
+            "definition": {
+                "name": "pageSorts",
+                "type": "string",
+                "example": "ip,+groupCode,-name",
+                "desc": "分页排序,用英文逗号分隔多个排序条件,前导+表示正序,前导+可省略,前导-表示倒序",
+                "required": false
+            }
+        },
+        {
+            "type": "common/response/voidResult",
+            "definition": [
+                {
+                    "_ref": "common/response/code"
+                },
+                {
+                    "_ref": "common/response/message"
+                }
+            ]
+        },
+        {
+            "type": "common/response/simpleResult",
+            "definition": [
+                {
+                    "_ref": "common/response/code"
+                },
+                {
+                    "_ref": "common/response/message"
+                },
+                {
+                    "_ref": "common/response/result",
+                    "type": "<GenericsType>",
+                    "desc": "业务详情"
+                }
+            ]
+        },
+        {
+            "type": "common/response/pagedResult",
+            "definition": [
+                {
+                    "_ref": "common/response/code"
+                },
+                {
+                    "_ref": "common/response/message"
+                },
+                {
+                    "_ref": "common/response/result",
+                    "type": "<GenericsType>[]",
+                    "desc": "分页业务详情"
+                },
+                {
+                    "_ref": "common/header/pageIndex",
+                    "type": "number",
+                    "required": true
+                },
+                {
+                    "_ref": "common/header/pageSize",
+                    "type": "number",
+                    "required": true
+                },
+                {
+                    "_ref": "common/header/pageSorts",
+                    "type": "number",
+                    "required": true
+                },
+                {
+                    "name": "pageTotalSize",
+                    "type": "number",
+                    "example": 29,
+                    "desc": "总页数",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "common/response/arrayResult",
+            "definition": [
+                {
+                    "_ref": "common/response/code"
+                },
+                {
+                    "_ref": "common/response/message"
+                },
+                {
+                    "_ref": "common/response/result",
+                    "type": "<GenericsType>[]",
+                    "desc": "业务详情数组"
+                }
+            ]
+        },
+        {
+            "type": "common/response/code",
+            "definition": {
+                "name": "code",
+                "type": "string",
+                "example": null,
+                "desc": "业务状态码,0表示成功,其他表示失败,失败详情请参见错误码",
+                "required": true
+            }
+        },
+        {
+            "type": "common/response/message",
+            "definition": {
+                "name": "message",
+                "type": "string",
+                "example": null,
+                "desc": "消息提示,成功时为空,失败为报错信息",
+                "required": false
+            }
+        },
+        {
+            "type": "common/response/result",
+            "definition": {
+                "name": "result",
+                "type": "string",
+                "example": null,
+                "desc": "业务详情",
+                "required": true
+            }
+        }
+    ],
+    "entities": [
+        {
+            "type": "SystemAdministratorEntity",
+            "definition": [
+                {
+                    "name": "userId",
+                    "type": "number",
+                    "example": null,
+                    "desc": "账户ID,唯一",
+                    "required": true
+                },
+                {
+                    "name": "authType",
+                    "type": "number",
+                    "example": null,
+                    "desc": "认证方式,0表示本地口令认证,1表示AD域",
+                    "required": true
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "roleIds",
+                    "type": "string",
+                    "example": null,
+                    "desc": "角色,多个使用英文逗号分隔",
+                    "required": true
+                },
+                {
+                    "name": "userName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "账户,用户名,唯一,区分大小写",
+                    "required": true
+                },
+                {
+                    "name": "password",
+                    "type": "string",
+                    "example": null,
+                    "desc": "密码",
+                    "required": true
+                },
+                {
+                    "name": "confirmPassword",
+                    "type": "string",
+                    "example": null,
+                    "desc": "确认密码",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "状态,是否启用,0禁用1启用",
+                    "required": true
+                },
+                {
+                    "name": "department",
+                    "type": "string",
+                    "example": null,
+                    "desc": "公司部门",
+                    "required": false
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电子邮件",
+                    "required": false
+                },
+                {
+                    "name": "phone",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电话号码",
+                    "required": false
+                },
+                {
+                    "name": "remark",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "type": "SystemLicenseEntity",
+            "definition": [
+                {
+                    "name": "authorizedDatasource",
+                    "type": "string",
+                    "example": "1001,1002",
+                    "desc": "授权数据源",
+                    "required": true
+                },
+                {
+                    "name": "authorizedTerminal",
+                    "type": "string",
+                    "example": "G-IOT",
+                    "desc": "授权终端",
+                    "required": true
+                },
+                {
+                    "name": "copyright",
+                    "type": "string",
+                    "example": "Security of Universal IoT (ShenZhen)Co.,Ltd",
+                    "desc": "版权所有",
+                    "required": true
+                },
+                {
+                    "name": "expireDate",
+                    "type": "string",
+                    "example": "1676367312",
+                    "desc": "到期时间,10位的时间戳",
+                    "required": true
+                },
+                {
+                    "name": "esn",
+                    "type": "string",
+                    "example": "415f302b749e619a338f2918d4bf96df,58585cfc81f54efbdc37dd844bb2ddb7,03e09ba4f1bd8e9c6430bdd371f3d906,b8d94abfacc58af86b321dff4ae0e6e2,9f5a4e72249e460d3e964a5f4d5cb841,06ed6363164680b1bdaa51450f056d7f",
+                    "desc": "资产识别号",
+                    "required": true
+                },
+                {
+                    "name": "authorizedType",
+                    "type": "string",
+                    "example": "expire",
+                    "desc": "授权类型",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "RoleEntity",
+            "definition": [
+                {
+                    "name": "roleId",
+                    "type": "number",
+                    "example": null,
+                    "desc": "角色ID,唯一",
+                    "required": true
+                },
+                {
+                    "name": "roleName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "角色名称",
+                    "required": true
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "角色描述",
+                    "required": false
+                },
+                {
+                    "name": "rolePermissionList",
+                    "type": "<RolePermissionEntity>[]",
+                    "example": null,
+                    "desc": "角色权限",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "RolePermissionEntity",
+            "definition": [
+                {
+                    "name": "permissionId",
+                    "type": "number",
+                    "example": null,
+                    "desc": "权限ID,唯一",
+                    "required": true
+                },
+                {
+                    "name": "permissionName",
+                    "type": "number",
+                    "example": null,
+                    "desc": "权限名",
+                    "required": true
+                },
+                {
+                    "name": "subPermissionList",
+                    "type": "<RolePermissionEntity>[]",
+                    "example": null,
+                    "desc": "子权限",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "SystemAdvancedConfigEntity",
+            "definition": [
+                {
+                    "name": "configId",
+                    "type": "number",
+                    "example": null,
+                    "desc": "唯一ID",
+                    "required": true
+                },
+                {
+                    "name": "configName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "配置名,唯一名称,多个使用逗号分隔",
+                    "required": true
+                },
+                {
+                    "name": "value",
+                    "type": "string",
+                    "example": null,
+                    "desc": "配置值",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "SystemDictionaryAssetDeviceTypeEntity",
+            "definition": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产类别ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产类别名称",
+                    "required": true
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产类别描述",
+                    "required": true
+                },
+                {
+                    "name": "parentId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "父级资产类别,为空时表示新增的是资产大类,否则表示新增的是资产小类",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "type": "FieldEntity",
+            "definition": [
+                {
+                    "name": "datasourceType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "数据源类型",
+                    "required": true
+                },
+                {
+                    "name": "fieldId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "字段ID",
+                    "required": true
+                },
+                {
+                    "name": "nameZh",
+                    "type": "string",
+                    "example": null,
+                    "desc": "中文名称",
+                    "required": true
+                },
+                {
+                    "name": "nameEn",
+                    "type": "string",
+                    "example": null,
+                    "desc": "英文名称",
+                    "required": true
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "描述",
+                    "required": true
+                },
+                {
+                    "name": "fieldType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "字段类型",
+                    "required": true
+                },
+                {
+                    "name": "value",
+                    "type": "string",
+                    "example": null,
+                    "desc": "值",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "type": "FieldValueEntity",
+            "definition": [
+                {
+                    "name": "fieldId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "字段ID",
+                    "required": true
+                },
+                {
+                    "name": "value",
+                    "type": "string",
+                    "example": null,
+                    "desc": "值",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "BrandMatchEntity",
+            "definition": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID",
+                    "required": true
+                },
+                {
+                    "name": "matchValue",
+                    "type": "string",
+                    "example": null,
+                    "desc": "匹配值",
+                    "required": true
+                },
+                {
+                    "name": "realValue",
+                    "type": "string",
+                    "example": null,
+                    "desc": "真实值",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "EngineEntity",
+            "definition": [
+                {
+                    "name": "ndId",
+                    "type": "number",
+                    "example": null,
+                    "desc": "唯一ID",
+                    "required": true
+                },
+                {
+                    "name": "ndName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "引擎名称",
+                    "required": true
+                },
+                {
+                    "name": "ndIp",
+                    "type": "string",
+                    "example": null,
+                    "desc": "引擎资产IP地址",
+                    "required": true
+                },
+                {
+                    "name": "esncode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "引擎序列号",
+                    "required": true
+                },
+                {
+                    "name": "ndVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "引擎版本号",
+                    "required": true
+                },
+                {
+                    "name": "status",
+                    "type": "string",
+                    "example": null,
+                    "desc": "状态,Running表示正常运行,Failed表示离线",
+                    "required": true
+                },
+                {
+                    "name": "identificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "平台唯一标识",
+                    "required": true
+                },
+                {
+                    "name": "uuid",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一UUID",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "EngineSummaryEntity",
+            "definition": [
+                {
+                    "name": "ndName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "引擎名称",
+                    "required": true
+                },
+                {
+                    "name": "ndIp",
+                    "type": "string",
+                    "example": null,
+                    "desc": "引擎资产IP地址",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "NorthPortEntity",
+            "definition": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID",
+                    "required": true
+                },
+                {
+                    "name": "peerIp",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP地址",
+                    "required": true
+                },
+                {
+                    "name": "appKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "授权凭证key",
+                    "required": true
+                },
+                {
+                    "name": "identificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "平台唯一标识",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否启用,0禁用1启用",
+                    "required": true
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "WhiteListEntity",
+            "definition": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "名称",
+                    "required": true
+                },
+                {
+                    "name": "ip",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP地址",
+                    "required": false
+                },
+                {
+                    "name": "mac",
+                    "type": "string",
+                    "example": null,
+                    "desc": "MAC地址",
+                    "required": false
+                },
+                {
+                    "name": "effectiveTimeRange",
+                    "type": "string",
+                    "example": "2023-02-22 05:14:21 ~ 2023-03-31 11:14:21",
+                    "desc": "生效时间,格式\"{开始时间} ~ {结束时间}\",时间格式为\"yyyy-MM-dd HH:mm:ss\",为空表示永久生效",
+                    "required": false
+                },
+                {
+                    "name": "identificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "平台唯一标识",
+                    "required": true
+                },
+                {
+                    "name": "remark",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否启用,0禁用1启用",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "PolicyEntity",
+            "definition": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "名称",
+                    "required": true
+                },
+                {
+                    "name": "queryConditionId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件ID",
+                    "required": true
+                },
+                {
+                    "name": "groupId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构ID",
+                    "required": true
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "groupName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构名称",
+                    "required": true
+                },
+                {
+                    "name": "actionList",
+                    "type": "<PolicyAction>[]",
+                    "example": null,
+                    "desc": "动作列表",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否启用,0禁用1启用",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "type": "PolicyAction",
+            "definition": [
+                {
+                    "name": "actionId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "动作名称",
+                    "required": true
+                },
+                {
+                    "name": "value",
+                    "type": "string",
+                    "example": null,
+                    "desc": "动作参数配置,可为空,可为字符串,可也JSON对象",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "DatasourceConfigEntity",
+            "definition": [
+                {
+                    "name": "datasourceType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "数据源类型",
+                    "required": true
+                },
+                {
+                    "name": "nameZh",
+                    "type": "string",
+                    "example": null,
+                    "desc": "中文名称",
+                    "required": true
+                },
+                {
+                    "name": "nameEn",
+                    "type": "string",
+                    "example": null,
+                    "desc": "英文名称,唯一",
+                    "required": true
+                },
+                {
+                    "name": "value",
+                    "type": "string",
+                    "example": null,
+                    "desc": "配置值",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "NetworkSegmentEntity",
+            "definition": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "网段ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "网段名",
+                    "required": true
+                },
+                {
+                    "name": "network",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP地址段",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "状态,是否监控/是否启用,0禁用1启用",
+                    "required": true
+                },
+                {
+                    "name": "static",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否静态IP网段,0动态1静态",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "OwnerEntity",
+            "definition": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "使用人ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "用户名",
+                    "required": true
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "department",
+                    "type": "string",
+                    "example": null,
+                    "desc": "公司部门",
+                    "required": false
+                },
+                {
+                    "name": "phone",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电话号码",
+                    "required": false
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电子邮件",
+                    "required": false
+                },
+                {
+                    "name": "remark",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "type": "StatisticsEntity",
+            "definition": [
+                {
+                    "name": "title",
+                    "type": "string",
+                    "example": null,
+                    "desc": "标题",
+                    "required": true
+                },
+                {
+                    "name": "fieldList",
+                    "type": "<FieldEntity>[]",
+                    "example": null,
+                    "desc": "字段数组",
+                    "required": true
+                },
+                {
+                    "name": "seriesList",
+                    "type": "<StatisticsSeriesEntity>[]",
+                    "example": null,
+                    "desc": "数据序列数组",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "StatisticsSeriesEntity",
+            "definition": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "数据序列名称",
+                    "required": true
+                },
+                {
+                    "name": "pointList",
+                    "type": "<StatisticsSeriesPointEntity>[]",
+                    "example": null,
+                    "desc": "数据序列",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "StatisticsSeriesPointEntity",
+            "definition": [
+                {
+                    "name": "dimensionList",
+                    "type": "<FieldValueEntity>[]",
+                    "example": null,
+                    "desc": "维度列表",
+                    "required": true
+                },
+                {
+                    "name": "quotaList",
+                    "type": "<FieldValueEntity>[]",
+                    "example": null,
+                    "desc": "指标列表",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "ViewSectionConfigEntity",
+            "definition": [
+                {
+                    "name": "uuid",
+                    "type": "string",
+                    "example": null,
+                    "desc": "板块UUID",
+                    "required": true
+                },
+                {
+                    "name": "tabUuid",
+                    "type": "string",
+                    "example": null,
+                    "desc": "所属视图UUID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "板块名称",
+                    "required": false
+                },
+                {
+                    "name": "condition",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件",
+                    "required": false
+                },
+                {
+                    "name": "position",
+                    "type": "string",
+                    "example": null,
+                    "desc": "位置",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "type": "QueryConditionEntity",
+            "definition": [
+                {
+                    "name": "queryConditionId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "板块名称",
+                    "required": true
+                },
+                {
+                    "name": "condition",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "AssetEntity",
+            "definition": [
+                {
+                    "name": "accessStatus",
+                    "type": "string",
+                    "example": null,
+                    "desc": "接入状态:1表示私接,2表示仿冒,3表示阻断,4表示准入",
+                    "required": false
+                },
+                {
+                    "name": "assetFrom",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产的数据源来源",
+                    "required": false
+                },
+                {
+                    "name": "assetId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产ID",
+                    "required": false
+                },
+                {
+                    "name": "assetName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产名称",
+                    "required": false
+                },
+                {
+                    "name": "brand",
+                    "type": "string",
+                    "example": null,
+                    "desc": "厂家品牌",
+                    "required": false
+                },
+                {
+                    "name": "combineTag",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "合并标识:0表示常规资产,1表示被合并资产",
+                    "required": false
+                },
+                {
+                    "name": "combineType",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "合并类型:0表示常规,1表示自动合并,2表示手动合并",
+                    "required": false
+                },
+                {
+                    "name": "deviceName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "设备名称",
+                    "required": false
+                },
+                {
+                    "name": "deviceType",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "资产类型",
+                    "required": false
+                },
+                {
+                    "name": "discoveryTime",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "第一次发现时间",
+                    "required": false
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构编码",
+                    "required": false
+                },
+                {
+                    "name": "groupId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构ID",
+                    "required": false
+                },
+                {
+                    "name": "identificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "Controller唯一标识",
+                    "required": false
+                },
+                {
+                    "name": "ip",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP地址",
+                    "required": false
+                },
+                {
+                    "name": "ipNum",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP数量",
+                    "required": false
+                },
+                {
+                    "name": "ipOnOffline",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "IP在线/离线状态:0表示在线,1表示离线",
+                    "required": false
+                },
+                {
+                    "name": "mac",
+                    "type": "string",
+                    "example": null,
+                    "desc": "MAC地址",
+                    "required": false
+                },
+                {
+                    "name": "model",
+                    "type": "string",
+                    "example": null,
+                    "desc": "型",
+                    "required": false
+                },
+                {
+                    "name": "ndId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "引擎ID",
+                    "required": false
+                },
+                {
+                    "name": "networkCardNum",
+                    "type": "string",
+                    "example": null,
+                    "desc": "网卡数量",
+                    "required": false
+                },
+                {
+                    "name": "networkSegmentId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "关联网段ID",
+                    "required": false
+                },
+                {
+                    "name": "offlineTime",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "最近离线时间",
+                    "required": false
+                },
+                {
+                    "name": "onOffline",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "资产在线/离线状态:0表示在线,1表示离线",
+                    "required": false
+                },
+                {
+                    "name": "onlineTime",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "最近上线时间",
+                    "required": false
+                },
+                {
+                    "name": "port",
+                    "type": "string",
+                    "example": null,
+                    "desc": "开放端口号",
+                    "required": false
+                },
+                {
+                    "name": "service",
+                    "type": "string",
+                    "example": null,
+                    "desc": "服务",
+                    "required": false
+                },
+                {
+                    "name": "startTime",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "资产启用时间",
+                    "required": false
+                },
+                {
+                    "name": "ipInt",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "-",
+                    "required": true
+                },
+                {
+                    "name": "identifyType",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "识别类型:1表示协议识别,2表示非nmap识别,3表示nmap识别,4表示nmap全量扫描",
+                    "required": true
+                },
+                {
+                    "name": "esncode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "序列号",
+                    "required": true
+                },
+                {
+                    "name": "ipMask",
+                    "type": "string",
+                    "example": null,
+                    "desc": "子网掩码",
+                    "required": true
+                },
+                {
+                    "name": "maskBit",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "掩码位数",
+                    "required": true
+                },
+                {
+                    "name": "gateway",
+                    "type": "string",
+                    "example": null,
+                    "desc": "默认网关",
+                    "required": true
+                },
+                {
+                    "name": "group",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构名称",
+                    "required": true
+                },
+                {
+                    "name": "position",
+                    "type": "string",
+                    "example": null,
+                    "desc": "物理位置",
+                    "required": true
+                },
+                {
+                    "name": "networkPosition",
+                    "type": "string",
+                    "example": null,
+                    "desc": "网络位置",
+                    "required": true
+                },
+                {
+                    "name": "systemVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作系统发行版本",
+                    "required": true
+                },
+                {
+                    "name": "onNvr",
+                    "type": "string",
+                    "example": null,
+                    "desc": "摄像头对接的NVR",
+                    "required": true
+                },
+                {
+                    "name": "remarks",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": true
+                },
+                {
+                    "name": "lastChangeTime",
+                    "type": "string",
+                    "example": null,
+                    "desc": "最后修改备注信息时间",
+                    "required": true
+                },
+                {
+                    "name": "owner",
+                    "type": "string",
+                    "example": null,
+                    "desc": "挂账人",
+                    "required": true
+                },
+                {
+                    "name": "assetNum",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产编号",
+                    "required": true
+                },
+                {
+                    "name": "mainAsset",
+                    "type": "string",
+                    "example": null,
+                    "desc": "合并资产中真实的主资产ID",
+                    "required": true
+                },
+                {
+                    "name": "softwareVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "软件版本",
+                    "required": true
+                },
+                {
+                    "name": "hardwareVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "硬件版本",
+                    "required": true
+                },
+                {
+                    "name": "firmwareVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "固件版本",
+                    "required": true
+                },
+                {
+                    "name": "kernelVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "内核版本",
+                    "required": true
+                },
+                {
+                    "name": "defaultGateway",
+                    "type": "string",
+                    "example": null,
+                    "desc": "默认网关",
+                    "required": true
+                },
+                {
+                    "name": "subnetMask",
+                    "type": "string",
+                    "example": null,
+                    "desc": "子网掩码",
+                    "required": true
+                },
+                {
+                    "name": "deviceServiceIp1",
+                    "type": "string",
+                    "example": null,
+                    "desc": "设备服务的IP1",
+                    "required": true
+                },
+                {
+                    "name": "deviceServiceIp2",
+                    "type": "string",
+                    "example": null,
+                    "desc": "设备服务的IP2",
+                    "required": true
+                },
+                {
+                    "name": "deviceServicePort",
+                    "type": "string",
+                    "example": null,
+                    "desc": "设备的服务端口",
+                    "required": true
+                },
+                {
+                    "name": "deviceClientPort",
+                    "type": "string",
+                    "example": null,
+                    "desc": "设备的客户端端口",
+                    "required": true
+                },
+                {
+                    "name": "deviceWebPort",
+                    "type": "string",
+                    "example": null,
+                    "desc": "设备的Web端口",
+                    "required": true
+                },
+                {
+                    "name": "primaryNds",
+                    "type": "string",
+                    "example": null,
+                    "desc": "主选DNS",
+                    "required": true
+                },
+                {
+                    "name": "alternateNds",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备选DNS",
+                    "required": true
+                },
+                {
+                    "name": "snmpTrapTargetIp",
+                    "type": "string",
+                    "example": null,
+                    "desc": "SNMPtrap目标IP",
+                    "required": true
+                },
+                {
+                    "name": "channelName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "通道名称",
+                    "required": true
+                },
+                {
+                    "name": "assetPosition",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产位置",
+                    "required": true
+                },
+                {
+                    "name": "osFirmwareType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作系统/固件类型",
+                    "required": true
+                },
+                {
+                    "name": "osBits",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作系统位数",
+                    "required": true
+                },
+                {
+                    "name": "osFirmwareVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作系统/固件版本号",
+                    "required": true
+                },
+                {
+                    "name": "wmiPatchVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "Windows补丁版本号",
+                    "required": true
+                },
+                {
+                    "name": "osFirmwareLargeVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作系统/固件大版本号",
+                    "required": true
+                },
+                {
+                    "name": "osFirmwareMinorVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作系统/固件小版本号",
+                    "required": true
+                },
+                {
+                    "name": "osFirmwareBuildVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作系统/固件Build版本号",
+                    "required": true
+                },
+                {
+                    "name": "nowUser",
+                    "type": "string",
+                    "example": null,
+                    "desc": "当前登录用户",
+                    "required": true
+                },
+                {
+                    "name": "biosVersion",
+                    "type": "string",
+                    "example": null,
+                    "desc": "BIOS版本号",
+                    "required": true
+                },
+                {
+                    "name": "biosSerialNum",
+                    "type": "string",
+                    "example": null,
+                    "desc": "BIOS序列号",
+                    "required": true
+                },
+                {
+                    "name": "timeZone",
+                    "type": "string",
+                    "example": null,
+                    "desc": "时区",
+                    "required": true
+                },
+                {
+                    "name": "cpuName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "CPU名称",
+                    "required": true
+                },
+                {
+                    "name": "cpuNum",
+                    "type": "string",
+                    "example": null,
+                    "desc": "CPU个数",
+                    "required": true
+                },
+                {
+                    "name": "cpuCoreNum",
+                    "type": "string",
+                    "example": null,
+                    "desc": "CPU总核数",
+                    "required": true
+                },
+                {
+                    "name": "cpuThreadNum",
+                    "type": "string",
+                    "example": null,
+                    "desc": "CPU总线程数",
+                    "required": true
+                },
+                {
+                    "name": "cpuX",
+                    "type": "string",
+                    "example": null,
+                    "desc": "CPU架构x86、x64、ARM、MIPS等",
+                    "required": true
+                },
+                {
+                    "name": "cpuBits",
+                    "type": "string",
+                    "example": null,
+                    "desc": "CPU位数",
+                    "required": true
+                },
+                {
+                    "name": "ram",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "内存总数,单位为GB",
+                    "required": true
+                },
+                {
+                    "name": "ramUsed",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "已使用内存,单位为GB",
+                    "required": true
+                },
+                {
+                    "name": "freeRam",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "空闲内存,单位为GB",
+                    "required": true
+                },
+                {
+                    "name": "ramUsage",
+                    "type": "string",
+                    "example": null,
+                    "desc": "内存使用率",
+                    "required": true
+                },
+                {
+                    "name": "switchIp",
+                    "type": "string",
+                    "example": null,
+                    "desc": "所接交换机IP",
+                    "required": true
+                },
+                {
+                    "name": "workGroup",
+                    "type": "string",
+                    "example": null,
+                    "desc": "域/工作组名",
+                    "required": true
+                },
+                {
+                    "name": "isDomain",
+                    "type": "string",
+                    "example": null,
+                    "desc": "是否入域",
+                    "required": true
+                },
+                {
+                    "name": "pcType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "PC类型",
+                    "required": true
+                },
+                {
+                    "name": "specification",
+                    "type": "string",
+                    "example": null,
+                    "desc": "规格",
+                    "required": true
+                },
+                {
+                    "name": "switchSystemName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "所接交换机名称",
+                    "required": true
+                },
+                {
+                    "name": "interfaceName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "所接交换机端口",
+                    "required": true
+                },
+                {
+                    "name": "uuid",
+                    "type": "string",
+                    "example": null,
+                    "desc": "数据的全局唯一标识",
+                    "required": true
+                },
+                {
+                    "name": "cpuUsage",
+                    "type": "string",
+                    "example": null,
+                    "desc": "CPU使用率",
+                    "required": true
+                },
+                {
+                    "name": "recordTime",
+                    "type": "string",
+                    "example": null,
+                    "desc": "上报时间",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "AssetExtBasicInfoEntity",
+            "definition": [
+                {
+                    "name": "type",
+                    "type": "string",
+                    "example": null,
+                    "desc": "扩展类型:software表示安装的软件列表,patch表示安装的补丁列表,network表示网络接口信息,user表示用户列表,disk表示硬盘分区列表,process表示运行进程列表,service表示服务列表,share表示共享列表,hardware表示安装的硬件信息",
+                    "required": true
+                },
+                {
+                    "name": "fields",
+                    "type": "<FieldEntity>[]",
+                    "example": null,
+                    "desc": "扩展基本信息",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "AssetDatasourceInfoEntity",
+            "definition": [
+                {
+                    "name": "datasourceType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "数据源类型",
+                    "required": true
+                },
+                {
+                    "name": "tableList",
+                    "type": "<AssetDatasourceTableInfoEntity>[]",
+                    "example": null,
+                    "desc": "数据表的数组",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "AssetDatasourceTableInfoEntity",
+            "definition": [
+                {
+                    "name": "nameZh",
+                    "type": "string",
+                    "example": null,
+                    "desc": "中文名称",
+                    "required": true
+                },
+                {
+                    "name": "nameEn",
+                    "type": "string",
+                    "example": null,
+                    "desc": "英文名称",
+                    "required": true
+                },
+                {
+                    "name": "totalRecords",
+                    "type": "number",
+                    "example": null,
+                    "desc": "总记录数",
+                    "required": true
+                },
+                {
+                    "name": "fieldList",
+                    "type": "<FieldEntity>[]",
+                    "example": null,
+                    "desc": "字段数组",
+                    "required": true
+                },
+                {
+                    "name": "recordList",
+                    "type": "<Object>[]",
+                    "example": null,
+                    "desc": "数据数组",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "AssetOnofflineInfoEntity",
+            "definition": [
+                {
+                    "name": "ip",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP地址",
+                    "required": true
+                },
+                {
+                    "name": "ipOnOffline",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "IP在线/离线状态:0表示在线,1表示离线",
+                    "required": true
+                },
+                {
+                    "name": "recordTime",
+                    "type": "string",
+                    "example": null,
+                    "desc": "上报时间",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "AssetChangeHistoryInfoEntity",
+            "definition": [
+                {
+                    "name": "type",
+                    "type": "number",
+                    "example": null,
+                    "desc": "变更类型",
+                    "required": true
+                },
+                {
+                    "name": "content",
+                    "type": "string",
+                    "example": null,
+                    "desc": "变更内容",
+                    "required": true
+                },
+                {
+                    "name": "recordTime",
+                    "type": "string",
+                    "example": null,
+                    "desc": "上报时间",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "AssetSecuirtyInfoEntity",
+            "definition": [
+                {
+                    "name": "type",
+                    "type": "number",
+                    "example": null,
+                    "desc": "类型",
+                    "required": true
+                },
+                {
+                    "name": "content",
+                    "type": "string",
+                    "example": null,
+                    "desc": "信息",
+                    "required": true
+                },
+                {
+                    "name": "status",
+                    "type": "string",
+                    "example": null,
+                    "desc": "状态",
+                    "required": true
+                },
+                {
+                    "name": "recordTime",
+                    "type": "string",
+                    "example": null,
+                    "desc": "上报时间",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "NetworkSegmentStatisticsEntity",
+            "definition": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "网段ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "网段名",
+                    "required": true
+                },
+                {
+                    "name": "network",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP地址段",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "状态,是否监控/是否启用,0禁用1启用",
+                    "required": true
+                },
+                {
+                    "name": "static",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否静态IP网段,0动态1静态",
+                    "required": true
+                },
+                {
+                    "name": "unusedIpCount",
+                    "type": "number",
+                    "example": null,
+                    "desc": "未使用IP数(未使用IP数=总数-在线IP数-离线IP数)",
+                    "required": true
+                },
+                {
+                    "name": "totalIpCount",
+                    "type": "number",
+                    "example": null,
+                    "desc": "IP总数",
+                    "required": true
+                },
+                {
+                    "name": "onlineIpCount",
+                    "type": "number",
+                    "example": null,
+                    "desc": "在线IP数",
+                    "required": true
+                },
+                {
+                    "name": "offlineIpCount",
+                    "type": "number",
+                    "example": null,
+                    "desc": "离线IP数",
+                    "required": true
+                },
+                {
+                    "name": "longTermUnusedIpCount",
+                    "type": "number",
+                    "example": null,
+                    "desc": "长期未使用IP数",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "AlarmEntity",
+            "definition": [
+                {
+                    "name": "alarmId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "告警ID",
+                    "required": true
+                },
+                {
+                    "name": "alarmName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "告警名称",
+                    "required": true
+                },
+                {
+                    "name": "alarmAssertCount",
+                    "type": "number",
+                    "example": null,
+                    "desc": "告警匹配资产次数",
+                    "required": true
+                },
+                {
+                    "name": "policyId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "安全策略ID",
+                    "required": true
+                },
+                {
+                    "name": "policyName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "安全策略名称",
+                    "required": true
+                },
+                {
+                    "name": "queryConditionId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件ID",
+                    "required": true
+                },
+                {
+                    "name": "queryConditionName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件名称",
+                    "required": true
+                },
+                {
+                    "name": "identificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "平台唯一标识",
+                    "required": true
+                },
+                {
+                    "name": "groupId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构ID",
+                    "required": true
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "groupName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构名称",
+                    "required": true
+                },
+                {
+                    "name": "recordTime",
+                    "type": "string",
+                    "example": null,
+                    "desc": "上报时间",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "LogOperationEntity",
+            "definition": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作日志ID",
+                    "required": true
+                },
+                {
+                    "name": "userId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "用户ID",
+                    "required": true
+                },
+                {
+                    "name": "userName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "用户名称",
+                    "required": true
+                },
+                {
+                    "name": "identificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "平台唯一标识",
+                    "required": true
+                },
+                {
+                    "name": "groupId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构ID",
+                    "required": true
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "groupName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构名称",
+                    "required": true
+                },
+                {
+                    "name": "moduleId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "模块ID",
+                    "required": true
+                },
+                {
+                    "name": "moduleName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "模块名称",
+                    "required": true
+                },
+                {
+                    "name": "opName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "功能名称",
+                    "required": true
+                },
+                {
+                    "name": "opType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作类型",
+                    "required": true
+                },
+                {
+                    "name": "opResult",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作结果",
+                    "required": true
+                },
+                {
+                    "name": "requestSourceIp",
+                    "type": "string",
+                    "example": null,
+                    "desc": "请求的来源IP地址",
+                    "required": true
+                },
+                {
+                    "name": "requestUri",
+                    "type": "string",
+                    "example": null,
+                    "desc": "请求的目标地址",
+                    "required": true
+                },
+                {
+                    "name": "requestParam",
+                    "type": "string",
+                    "example": null,
+                    "desc": "请求参数",
+                    "required": true
+                },
+                {
+                    "name": "recordTime",
+                    "type": "string",
+                    "example": null,
+                    "desc": "上报时间/操作时间",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "TokenEntity",
+            "definition": [
+                {
+                    "name": "token",
+                    "type": "string",
+                    "example": null,
+                    "desc": "动态token",
+                    "required": true
+                },
+                {
+                    "name": "expiredAt",
+                    "type": "number",
+                    "example": null,
+                    "desc": "过期时间戳",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "SyncAssetDetailEntity",
+            "desc": "数据结构示例 {\n  \"changeHistoryInfo\": [\n    {\n      \"recordTime\": \"<上报时间>\",\n      \"type\": \"<变更类型>\",\n      \"content\": \"<变更内容>\"\n    }\n  ],\n  \"secuirtyInfo\": [\n    {\n      \"recordTime\": \"<上报时间>\",\n      \"type\": \"<类型>\",\n      \"content\": \"<信息>\",\n      \"status\": \"<状态>\"\n    }\n  ],\n  \"onofflineInfo\": [\n    {\n      \"recordTime\": \"<上报时间>\",\n      \"ipOnOffline\": \"<IP在线/离线状态:0表示在线,1表示离线>\",\n      \"ip\": \"<IP地址>\"\n    }\n  ],\n  \"datasourceInfo\": [\n    {\n      \"datasourceType\": \"<数据源类型>\",\n      \"tableList\": [\n        {\n          \"totalRecords\": \"<总记录数>\",\n          \"recordList\": [\n            {\n              \"<字段1的ID>\": \"<字段1的值>\",\n              \"<字段2的ID>\": \"<字段2的值>\",\n              \"<字段3的ID>\": \"<字段3的值>\"\n            }\n          ],\n          \"nameZh\": \"<中文名称>\",\n          \"nameEn\": \"<英文名称>\",\n          \"fieldList\": [\n            {\n              \"datasourceType\": \"<数据源类型>\",\n              \"nameZh\": \"<中文名称>\",\n              \"nameEn\": \"<英文名称>\",\n              \"fieldType\": \"<字段类型>\",\n              \"fieldId\": \"<字段ID>\",\n              \"desc\": \"<描述>\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"extBasicInfo\": [\n    {\n      \"type\": \"<扩展类型:software表示安装的软件列表,patch表示安装的补丁列表,network表示网络接口信息,user表示用户列表,disk表示硬盘分区列表,process表示运行进程列表,service表示服务列表,share表示共享列表,hardware表示安装的硬件信息>\",\n      \"fields\": [\n        {\n          \"datasourceType\": \"<数据源类型>\",\n          \"nameZh\": \"<中文名称>\",\n          \"nameEn\": \"<英文名称>\",\n          \"fieldType\": \"<字段类型>\",\n          \"value\": \"<值>\",\n          \"fieldId\": \"<字段ID>\",\n          \"desc\": \"<描述>\"\n        }\n      ]\n    }\n  ],\n  \"basicInfo\": [\n    {\n      \"datasourceType\": \"<数据源类型>\",\n      \"nameZh\": \"<中文名称>\",\n      \"nameEn\": \"<英文名称>\",\n      \"fieldType\": \"<字段类型>\",\n      \"value\": \"<值>\",\n      \"fieldId\": \"<字段ID>\",\n      \"desc\": \"<描述>\"\n    }\n  ]\n}\n",
+            "definition": [
+                {
+                    "name": "basicInfo",
+                    "type": "<FieldEntity>[]",
+                    "example": null,
+                    "desc": "基本信息",
+                    "required": true
+                },
+                {
+                    "name": "extBasicInfo",
+                    "type": "<AssetExtBasicInfoEntity>[]",
+                    "example": null,
+                    "desc": "扩展基本信息",
+                    "required": true
+                },
+                {
+                    "name": "datasourceInfo",
+                    "type": "<AssetDatasourceInfoEntity>[]",
+                    "example": null,
+                    "desc": "数据源信息",
+                    "required": true
+                },
+                {
+                    "name": "onofflineInfo",
+                    "type": "<AssetOnofflineInfoEntity>[]",
+                    "example": null,
+                    "desc": "在线/离线信息",
+                    "required": true
+                },
+                {
+                    "name": "changeHistoryInfo",
+                    "type": "<AssetChangeHistoryInfoEntity>[]",
+                    "example": null,
+                    "desc": "变更历史信息",
+                    "required": true
+                },
+                {
+                    "name": "secuirtyInfo",
+                    "type": "<AssetSecuirtyInfoEntity>[]",
+                    "example": null,
+                    "desc": "安全合规信息",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "SyncAlarmDetailEntity",
+            "definition": [
+                {
+                    "name": "alarmId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "告警ID",
+                    "required": true
+                },
+                {
+                    "name": "alarmName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "告警名称",
+                    "required": true
+                },
+                {
+                    "name": "alarmAssertCount",
+                    "type": "number",
+                    "example": null,
+                    "desc": "告警匹配资产次数",
+                    "required": true
+                },
+                {
+                    "name": "policyId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "安全策略ID",
+                    "required": true
+                },
+                {
+                    "name": "policyName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "安全策略名称",
+                    "required": true
+                },
+                {
+                    "name": "queryConditionId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件ID",
+                    "required": true
+                },
+                {
+                    "name": "queryConditionName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件名称",
+                    "required": true
+                },
+                {
+                    "name": "identificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "平台唯一标识",
+                    "required": true
+                },
+                {
+                    "name": "groupId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构ID",
+                    "required": true
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "groupName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构名称",
+                    "required": true
+                },
+                {
+                    "name": "recordTime",
+                    "type": "string",
+                    "example": null,
+                    "desc": "上报时间",
+                    "required": true
+                },
+                {
+                    "name": "assetDetails",
+                    "type": "<SyncAssetDetailEntity>[]",
+                    "example": null,
+                    "desc": "(全量)资产详情",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "type": "SyncLogOperationEntity",
+            "definition": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作日志ID",
+                    "required": true
+                },
+                {
+                    "name": "userId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "用户ID",
+                    "required": true
+                },
+                {
+                    "name": "userName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "用户名称",
+                    "required": true
+                },
+                {
+                    "name": "identificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "平台唯一标识",
+                    "required": true
+                },
+                {
+                    "name": "groupId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构ID",
+                    "required": true
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "groupName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构名称",
+                    "required": true
+                },
+                {
+                    "name": "moduleId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "模块ID",
+                    "required": true
+                },
+                {
+                    "name": "moduleName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "模块名称",
+                    "required": true
+                },
+                {
+                    "name": "opName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "功能名称",
+                    "required": true
+                },
+                {
+                    "name": "opType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作类型",
+                    "required": true
+                },
+                {
+                    "name": "opResult",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作结果",
+                    "required": true
+                },
+                {
+                    "name": "requestSourceIp",
+                    "type": "string",
+                    "example": null,
+                    "desc": "请求的来源IP地址",
+                    "required": true
+                },
+                {
+                    "name": "requestUri",
+                    "type": "string",
+                    "example": null,
+                    "desc": "请求的目标地址",
+                    "required": true
+                },
+                {
+                    "name": "requestParam",
+                    "type": "string",
+                    "example": null,
+                    "desc": "请求参数",
+                    "required": true
+                },
+                {
+                    "name": "recordTime",
+                    "type": "string",
+                    "example": null,
+                    "desc": "上报时间/操作时间",
+                    "required": true
+                }
+            ]
+        }
+    ],
+    "apis": [
+        {
+            "uri": "/north/config/system/administrator/v2/create",
+            "method": "POST",
+            "title": "创建管理员",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "authType",
+                    "type": "number",
+                    "example": null,
+                    "desc": "认证方式,0表示本地口令认证,1表示AD域",
+                    "required": true
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "roleIds",
+                    "type": "string",
+                    "example": null,
+                    "desc": "角色,多个使用英文逗号分隔",
+                    "required": true
+                },
+                {
+                    "name": "userName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "账户,用户名,唯一,区分大小写",
+                    "required": true
+                },
+                {
+                    "name": "password",
+                    "type": "string",
+                    "example": null,
+                    "desc": "密码",
+                    "required": true
+                },
+                {
+                    "name": "confirmPassword",
+                    "type": "string",
+                    "example": null,
+                    "desc": "确认密码",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "状态,是否启用,0禁用1启用",
+                    "required": true
+                },
+                {
+                    "name": "department",
+                    "type": "string",
+                    "example": null,
+                    "desc": "公司部门",
+                    "required": false
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电子邮件",
+                    "required": false
+                },
+                {
+                    "name": "phone",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电话号码",
+                    "required": false
+                },
+                {
+                    "name": "remark",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/administrator/v2/delete",
+            "method": "DELETE",
+            "title": "删除管理员",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "userIds",
+                    "type": "number",
+                    "example": null,
+                    "desc": "账户ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/administrator/v2/update",
+            "method": "POST",
+            "title": "更新管理员",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "userId",
+                    "type": "number",
+                    "example": null,
+                    "desc": "账户ID,唯一",
+                    "required": true
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "roleIds",
+                    "type": "string",
+                    "example": null,
+                    "desc": "角色,多个使用英文逗号分隔",
+                    "required": true
+                },
+                {
+                    "name": "password",
+                    "type": "string",
+                    "example": null,
+                    "desc": "密码",
+                    "required": true
+                },
+                {
+                    "name": "confirmPassword",
+                    "type": "string",
+                    "example": null,
+                    "desc": "确认密码",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "状态,是否启用,0禁用1启用",
+                    "required": true
+                },
+                {
+                    "name": "department",
+                    "type": "string",
+                    "example": null,
+                    "desc": "公司部门",
+                    "required": false
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电子邮件",
+                    "required": false
+                },
+                {
+                    "name": "phone",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电话号码",
+                    "required": false
+                },
+                {
+                    "name": "remark",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/administrator/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询管理员",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "targetGroupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "目标组织架构编码,为空时返回所有组织架构的管理员,不为空时只返回指定组织架构的管理员;注意和header中获取的组织架构不同,header中获取的总是当前登录用户,targetGroupCode可以指定任意的组织架构",
+                    "required": false
+                },
+                {
+                    "name": "searchKeyword",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索关键字,仅在userName字段中搜索,过滤结果",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<SystemAdministratorEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/system/administrator/v2/resetPassword",
+            "method": "POST",
+            "title": "重置管理员密码",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "userId",
+                    "type": "number",
+                    "example": null,
+                    "desc": "账户ID,唯一",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/license/v2/query",
+            "method": "GET",
+            "title": "查询授权信息",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": {
+                "_refFlat": "common/response/simpleResult<SystemLicenseEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/system/license/v2/upload",
+            "method": "POST",
+            "title": "上传授权信息",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/simpleUpload"
+            },
+            "request": [
+                {
+                    "name": "licenseFile",
+                    "type": "file",
+                    "example": null,
+                    "desc": "授权信息",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/permission/v2/queryAllGrantablePermissions",
+            "method": "POST",
+            "title": "查询(全部)可授予的角色权限",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": {
+                "_refFlat": "common/response/arrayResult<RolePermissionEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/system/role/v2/create",
+            "method": "POST",
+            "title": "创建角色",
+            "desc": "在创建角色之前,结合分权分域,先查询出所有的可授予的角色权限,只能在可授予的权限中勾选",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "roleName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "角色名称",
+                    "required": true
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "角色描述",
+                    "required": false
+                },
+                {
+                    "name": "rolePermissionList",
+                    "type": "<RolePermissionEntity>[]",
+                    "example": null,
+                    "desc": "角色权限",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/role/v2/delete",
+            "method": "DELETE",
+            "title": "删除角色",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "roleIds",
+                    "type": "number",
+                    "example": null,
+                    "desc": "角色ID,唯一,多个使用英文逗号隔开",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/role/v2/update",
+            "method": "POST",
+            "title": "更新角色",
+            "desc": "在更新角色之前,结合分权分域,先查询出所有的可授予的角色权限,只能在可授予的权限中勾选",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "roleId",
+                    "type": "number",
+                    "example": null,
+                    "desc": "角色ID,唯一",
+                    "required": true
+                },
+                {
+                    "name": "roleName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "角色名称",
+                    "required": false
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "角色描述",
+                    "required": false
+                },
+                {
+                    "name": "rolePermissionList",
+                    "type": "<RolePermissionEntity>[]",
+                    "example": null,
+                    "desc": "角色权限",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/role/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询角色",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": null,
+            "response": {
+                "_refFlat": "common/response/pagedResult<RoleEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/system/advanced/v2/query",
+            "method": "GET",
+            "title": "查询高级配置",
+            "desc": "所有的配置值都是文本字符串,图片类的配置值也是文本字符串,图片存放的是URL",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "configName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "配置名,唯一名称,多个使用逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/arrayResult<SystemAdvancedConfigEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/system/advanced/v2/update",
+            "method": "POST",
+            "title": "更新高级配置",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "configName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "配置名,唯一名称,多个使用逗号分隔",
+                    "required": true
+                },
+                {
+                    "name": "value",
+                    "type": "string",
+                    "example": null,
+                    "desc": "配置值",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/advanced/v2/uploadImage",
+            "method": "POST",
+            "title": "更新(图片)高级配置",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/simpleUpload"
+            },
+            "request": [
+                {
+                    "name": "imageFile",
+                    "type": "file",
+                    "example": null,
+                    "desc": "(图片)高级配置",
+                    "required": true
+                },
+                {
+                    "name": "configName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "配置名,唯一名称,多个使用逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/advanced/v2/resetDefault",
+            "method": "POST",
+            "title": "重置高级配置",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "configName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "配置名,唯一名称,多个使用逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/createAssetDeviceType",
+            "method": "POST",
+            "title": "创建资产类别",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产类别名称",
+                    "required": true
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产类别描述",
+                    "required": true
+                },
+                {
+                    "name": "parentId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "父级资产类别,为空时表示新增的是资产大类,否则表示新增的是资产小类",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/queryAssetDeviceType",
+            "method": "GET",
+            "title": "查询资产类别",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "parentId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "父级资产类别,为空时表示查询的是资产大类,否则表示查询的是资产小类",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/arrayResult<SystemDictionaryAssetDeviceTypeEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/deleteAssetDeviceType",
+            "method": "DELETE",
+            "title": "删除资产类别",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "ids",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产类别ID,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/updateAssetDeviceType",
+            "method": "POST",
+            "title": "更新资产类别",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产类别ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产类别名称",
+                    "required": true
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产类别描述",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/createField",
+            "method": "POST",
+            "title": "创建补充字段",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "datasourceType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "数据源类型",
+                    "required": true
+                },
+                {
+                    "name": "nameZh",
+                    "type": "string",
+                    "example": null,
+                    "desc": "中文名称",
+                    "required": true
+                },
+                {
+                    "name": "nameEn",
+                    "type": "string",
+                    "example": null,
+                    "desc": "英文名称",
+                    "required": true
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "描述",
+                    "required": true
+                },
+                {
+                    "name": "fieldType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "字段类型",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/deleteField",
+            "method": "DELETE",
+            "title": "删除补充字段",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "fieldIds",
+                    "type": "string",
+                    "example": null,
+                    "desc": "字段ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/updateField",
+            "method": "POST",
+            "title": "更新补充字段",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "fieldId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "字段ID",
+                    "required": true
+                },
+                {
+                    "name": "datasourceType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "数据源类型",
+                    "required": false
+                },
+                {
+                    "name": "nameZh",
+                    "type": "string",
+                    "example": null,
+                    "desc": "中文名称",
+                    "required": false
+                },
+                {
+                    "name": "nameEn",
+                    "type": "string",
+                    "example": null,
+                    "desc": "英文名称",
+                    "required": false
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "描述",
+                    "required": false
+                },
+                {
+                    "name": "fieldType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "字段类型",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/queryFieldPagedList",
+            "method": "POST",
+            "title": "分页查询补充字段",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "searchDatasourceType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:数据源类型",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<FieldEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/createFieldValue",
+            "method": "POST",
+            "title": "创建补充字段的枚举值",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "fieldId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "字段ID",
+                    "required": true
+                },
+                {
+                    "name": "value",
+                    "type": "string",
+                    "example": null,
+                    "desc": "值",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/deleteFieldValue",
+            "method": "DELETE",
+            "title": "删除补充字段的枚举值",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "fieldId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "字段ID",
+                    "required": true
+                },
+                {
+                    "name": "value",
+                    "type": "string",
+                    "example": null,
+                    "desc": "值",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/updateFieldValue",
+            "method": "POST",
+            "title": "更新补充字段的枚举值",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "fieldId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "字段ID",
+                    "required": true
+                },
+                {
+                    "name": "oldValue",
+                    "type": "string",
+                    "example": null,
+                    "desc": "旧枚举值",
+                    "required": true
+                },
+                {
+                    "name": "newValue",
+                    "type": "string",
+                    "example": null,
+                    "desc": "新枚举值",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/dictionary/v2/queryFieldValuePagedList",
+            "method": "POST",
+            "title": "分页查询补充字段的枚举值",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "searchFieldId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:字段ID",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<FieldValueEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/system/brandMatch/v2/create",
+            "method": "POST",
+            "title": "创建品牌匹配规则",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "matchValue",
+                    "type": "string",
+                    "example": null,
+                    "desc": "匹配值",
+                    "required": true
+                },
+                {
+                    "name": "realValue",
+                    "type": "string",
+                    "example": null,
+                    "desc": "真实值",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/brandMatch/v2/delete",
+            "method": "DELETE",
+            "title": "删除品牌匹配规则",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "ids",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/brandMatch/v2/update",
+            "method": "POST",
+            "title": "更新品牌匹配规则",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID",
+                    "required": true
+                },
+                {
+                    "name": "matchValue",
+                    "type": "string",
+                    "example": null,
+                    "desc": "匹配值",
+                    "required": true
+                },
+                {
+                    "name": "realValue",
+                    "type": "string",
+                    "example": null,
+                    "desc": "真实值",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/brandMatch/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询品牌匹配规则",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": null,
+            "response": {
+                "_refFlat": "common/response/pagedResult<BrandMatchEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/system/engine/v2/querySummary",
+            "method": "POST",
+            "title": "查询(全部)引擎的概要信息",
+            "desc": "返回全部引擎的名称和IP等概要字段,如需获取更多的字段,使用\"分页查询引擎列表\"接口",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": {
+                "_refFlat": "common/response/arrayResult<EngineSummaryEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/system/engine/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询引擎列表",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "searchIdentificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:平台唯一标识",
+                    "required": false
+                },
+                {
+                    "name": "searchNdName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:引擎名称",
+                    "required": false
+                },
+                {
+                    "name": "searchNdIp",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:引擎资产IP地址",
+                    "required": false
+                },
+                {
+                    "name": "searchStatus",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:状态,Running表示正常运行,Failed表示离线",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<EngineEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/system/northPort/v2/create",
+            "method": "POST",
+            "title": "创建北向接口",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "peerIp",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP地址",
+                    "required": true
+                },
+                {
+                    "name": "identificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "平台唯一标识",
+                    "required": false
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否启用,0禁用1启用",
+                    "required": true
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/northPort/v2/delete",
+            "method": "DELETE",
+            "title": "删除北向接口",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "ids",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/northPort/v2/update",
+            "method": "POST",
+            "title": "更新北向接口",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否启用,0禁用1启用",
+                    "required": false
+                },
+                {
+                    "name": "desc",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/system/northPort/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询北向接口",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": null,
+            "response": {
+                "_refFlat": "common/response/pagedResult<NorthPortEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/policy/whiteList/v2/create",
+            "method": "POST",
+            "title": "创建白名单",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "名称",
+                    "required": true
+                },
+                {
+                    "name": "ip",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP地址",
+                    "required": false
+                },
+                {
+                    "name": "mac",
+                    "type": "string",
+                    "example": null,
+                    "desc": "MAC地址",
+                    "required": false
+                },
+                {
+                    "name": "effectiveTimeRange",
+                    "type": "string",
+                    "example": "2023-02-22 05:14:21 ~ 2023-03-31 11:14:21",
+                    "desc": "生效时间,格式\"{开始时间} ~ {结束时间}\",时间格式为\"yyyy-MM-dd HH:mm:ss\",为空表示永久生效",
+                    "required": false
+                },
+                {
+                    "name": "identificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "平台唯一标识",
+                    "required": true
+                },
+                {
+                    "name": "remark",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否启用,0禁用1启用",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/policy/whiteList/v2/delete",
+            "method": "DELETE",
+            "title": "删除白名单",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "ids",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/policy/whiteList/v2/update",
+            "method": "POST",
+            "title": "更新白名单",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID",
+                    "required": true
+                },
+                {
+                    "name": "ip",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP地址",
+                    "required": true
+                },
+                {
+                    "name": "mac",
+                    "type": "string",
+                    "example": null,
+                    "desc": "MAC地址",
+                    "required": true
+                },
+                {
+                    "name": "effectiveTimeRange",
+                    "type": "string",
+                    "example": "2023-02-22 05:14:21 ~ 2023-03-31 11:14:21",
+                    "desc": "生效时间,格式\"{开始时间} ~ {结束时间}\",时间格式为\"yyyy-MM-dd HH:mm:ss\",为空表示永久生效",
+                    "required": false
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否启用,0禁用1启用",
+                    "required": true
+                },
+                {
+                    "name": "remark",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/policy/whiteList/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询白名单",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "searchKeyword",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索关键字,在name或ip字段中搜索,过滤结果",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<WhiteListEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/policy/safe/v2/create",
+            "method": "POST",
+            "title": "创建安全策略",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "名称",
+                    "required": true
+                },
+                {
+                    "name": "queryConditionId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件ID",
+                    "required": true
+                },
+                {
+                    "name": "actionList",
+                    "type": "<PolicyAction>[]",
+                    "example": null,
+                    "desc": "动作列表",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否启用,0禁用1启用",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/policy/safe/v2/delete",
+            "method": "DELETE",
+            "title": "删除安全策略",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "ids",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/policy/safe/v2/update",
+            "method": "POST",
+            "title": "更新安全策略",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "名称",
+                    "required": false
+                },
+                {
+                    "name": "actionList",
+                    "type": "<PolicyAction>[]",
+                    "example": null,
+                    "desc": "动作列表",
+                    "required": false
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否启用,0禁用1启用",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/policy/safe/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询安全策略",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "searchKeyword",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索关键字,仅在name字段中搜索,过滤结果",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<PolicyEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/datasource/v2/queryAll",
+            "method": "GET",
+            "title": "查询(全部)数据源配置",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": {
+                "_refFlat": "common/response/arrayResult<DatasourceConfigEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/datasource/v2/query",
+            "method": "GET",
+            "title": "查询数据源配置",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "datasourceType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "数据源类型",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/simpleResult<DatasourceConfigEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/datasource/v2/update",
+            "method": "POST",
+            "title": "更新数据源配置",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "datasourceType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "数据源类型",
+                    "required": true
+                },
+                {
+                    "name": "nameEn",
+                    "type": "string",
+                    "example": null,
+                    "desc": "英文名称,唯一",
+                    "required": true
+                },
+                {
+                    "name": "value",
+                    "type": "string",
+                    "example": null,
+                    "desc": "配置值",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/v2/create",
+            "method": "POST",
+            "title": "创建组织架构",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "groupName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构名称",
+                    "required": true
+                },
+                {
+                    "name": "parentGroupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "父级唯一组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "geoLocation",
+                    "type": "string",
+                    "example": null,
+                    "desc": "地址位置",
+                    "required": false
+                },
+                {
+                    "name": "owner",
+                    "type": "string",
+                    "example": null,
+                    "desc": "维护责任人",
+                    "required": false
+                },
+                {
+                    "name": "phone",
+                    "type": "string",
+                    "example": null,
+                    "desc": "责任人联系电话",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/v2/upload",
+            "method": "POST",
+            "title": "上传组织架构",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/simpleUpload"
+            },
+            "request": [
+                {
+                    "name": "organizationFile",
+                    "type": "file",
+                    "example": null,
+                    "desc": "组织架构",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/v2/delete",
+            "method": "DELETE",
+            "title": "删除组织架构",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "groupIds",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构ID,多个使用英文逗号分隔"
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/v2/update",
+            "method": "POST",
+            "title": "更新组织架构",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "groupId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构ID"
+                },
+                {
+                    "name": "groupName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构名称",
+                    "required": true
+                },
+                {
+                    "name": "geoLocation",
+                    "type": "string",
+                    "example": null,
+                    "desc": "地址位置",
+                    "required": false
+                },
+                {
+                    "name": "owner",
+                    "type": "string",
+                    "example": null,
+                    "desc": "维护责任人",
+                    "required": false
+                },
+                {
+                    "name": "phone",
+                    "type": "string",
+                    "example": null,
+                    "desc": "责任人联系电话",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/v2/query",
+            "method": "GET",
+            "title": "查询组织架构",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "groupId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "组织架构ID"
+                },
+                {
+                    "name": "depth",
+                    "type": "number",
+                    "example": null,
+                    "desc": "查询深度,0表示只返回自身,1表示同时返回一级子节点,2表示同时返回二级子节点",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/simpleResult<OrganizationEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/organization/networkSegment/v2/create",
+            "method": "POST",
+            "title": "创建网段",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "网段名",
+                    "required": true
+                },
+                {
+                    "name": "network",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP地址段",
+                    "required": true
+                },
+                {
+                    "name": "ndId",
+                    "type": "number",
+                    "example": null,
+                    "desc": "引擎ID"
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "所属组织架构",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "状态,是否监控/是否启用,0禁用1启用",
+                    "required": true
+                },
+                {
+                    "name": "static",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否静态IP网段,0动态1静态",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/networkSegment/v2/upload",
+            "method": "POST",
+            "title": "上传网段",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/simpleUpload"
+            },
+            "request": [
+                {
+                    "name": "networkSegmentFile",
+                    "type": "file",
+                    "example": null,
+                    "desc": "网段",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/networkSegment/v2/delete",
+            "method": "DELETE",
+            "title": "删除网段",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "ids",
+                    "type": "string",
+                    "example": null,
+                    "desc": "网段ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/networkSegment/v2/deleteAll",
+            "method": "DELETE",
+            "title": "删除(全部)网段",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": null,
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/networkSegment/v2/update",
+            "method": "POST",
+            "title": "更新网段",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "网段ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "网段名",
+                    "required": true
+                },
+                {
+                    "name": "network",
+                    "type": "string",
+                    "example": null,
+                    "desc": "IP地址段",
+                    "required": true
+                },
+                {
+                    "name": "enable",
+                    "type": "number",
+                    "example": null,
+                    "desc": "状态,是否监控/是否启用,0禁用1启用",
+                    "required": true
+                },
+                {
+                    "name": "static",
+                    "type": "number",
+                    "example": null,
+                    "desc": "是否静态IP网段,0动态1静态",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/networkSegment/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询网段",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一组织架构编码,为空时所有组织架构的网段,不为空时只返回指定组织架构的网段",
+                    "required": false
+                },
+                {
+                    "name": "searchName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:网段名称",
+                    "required": false
+                },
+                {
+                    "name": "searchIdentificationKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:平台唯一标识",
+                    "required": false
+                },
+                {
+                    "name": "searchEnable",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:状态,是否监控/是否启用,0禁用1启用",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<NetworkSegmentEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/organization/networkSegment/v2/exportAll",
+            "method": "POST",
+            "title": "导出(全部)网段",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": null
+        },
+        {
+            "uri": "/north/config/organization/ownerList/v2/create",
+            "method": "POST",
+            "title": "创建使用人",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "用户名",
+                    "required": true
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "department",
+                    "type": "string",
+                    "example": null,
+                    "desc": "公司部门",
+                    "required": false
+                },
+                {
+                    "name": "phone",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电话号码",
+                    "required": false
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电子邮件",
+                    "required": false
+                },
+                {
+                    "name": "remark",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/ownerList/v2/delete",
+            "method": "DELETE",
+            "title": "删除使用人",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "ids",
+                    "type": "string",
+                    "example": null,
+                    "desc": "使用人ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/ownerList/v2/update",
+            "method": "POST",
+            "title": "更新使用人",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "example": null,
+                    "desc": "使用人ID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "用户名",
+                    "required": true
+                },
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一组织架构编码",
+                    "required": true
+                },
+                {
+                    "name": "department",
+                    "type": "string",
+                    "example": null,
+                    "desc": "公司部门",
+                    "required": false
+                },
+                {
+                    "name": "phone",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电话号码",
+                    "required": false
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "example": null,
+                    "desc": "电子邮件",
+                    "required": false
+                },
+                {
+                    "name": "remark",
+                    "type": "string",
+                    "example": null,
+                    "desc": "备注信息",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/organization/ownerList/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询使用人",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "groupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "唯一组织架构编码,为空时所有组织架构的使用人,不为空时只返回指定组织架构的使用人",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<OwnerEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/view/tab/v2/create",
+            "method": "POST",
+            "title": "创建面板视图",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "视图名称",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/view/tab/v2/delete",
+            "method": "DELETE",
+            "title": "删除面板视图",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "uuids",
+                    "type": "string",
+                    "example": null,
+                    "desc": "视图UUID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/view/tab/v2/update",
+            "method": "POST",
+            "title": "更新面板视图",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "uuid",
+                    "type": "string",
+                    "example": null,
+                    "desc": "视图UUID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "视图名称",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/view/tab/v2/queryAll",
+            "method": "GET",
+            "title": "查询(全部)面板视图",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": {
+                "_refFlat": "common/response/arrayResult<ViewTabConfigEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/view/section/v2/create",
+            "method": "POST",
+            "title": "创建视图板块",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "tabUuid",
+                    "type": "string",
+                    "example": null,
+                    "desc": "所属视图UUID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "板块名称",
+                    "required": true
+                },
+                {
+                    "name": "condition",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件",
+                    "required": true
+                },
+                {
+                    "name": "position",
+                    "type": "string",
+                    "example": null,
+                    "desc": "位置",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/view/section/v2/delete",
+            "method": "DELETE",
+            "title": "删除视图板块",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "uuids",
+                    "type": "string",
+                    "example": null,
+                    "desc": "板块UUID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/view/section/v2/update",
+            "method": "POST",
+            "title": "更新视图板块",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "uuid",
+                    "type": "string",
+                    "example": null,
+                    "desc": "板块UUID",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "板块名称",
+                    "required": false
+                },
+                {
+                    "name": "condition",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件",
+                    "required": false
+                },
+                {
+                    "name": "position",
+                    "type": "string",
+                    "example": null,
+                    "desc": "位置",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/config/view/section/v2/queryAll",
+            "method": "GET",
+            "title": "查询视图板块",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "tabUuid",
+                    "type": "string",
+                    "example": null,
+                    "desc": "所属视图UUID",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/arrayResult<ViewSectionConfigEntity>"
+            }
+        },
+        {
+            "uri": "/north/config/view/tab/v2/exportPdf",
+            "method": "POST",
+            "title": "导出面板视图PDF",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": null
+        },
+        {
+            "uri": "/north/config/view/tab/v2/sendMail",
+            "method": "POST",
+            "title": "发送面板视图邮件",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": null
+        },
+        {
+            "uri": "/north/assert/statistics/v2/query",
+            "method": "GET",
+            "title": "查询资产统计信息",
+            "desc": "这里是接口的返回示例\n{\n  \"code\": \"<业务状态码>\",\n  \"message\": \"<消息提示>\",\n  \"result\": {\n    \"title\": \"<标题>\",\n    \"fieldList\": [\n      {\n        \"fieldId\": \"<字段ID>\",\n        \"nameZh\": \"<字段中文名称>\",\n        \"nameEn\": \"<字段英文名称>\",\n        \"desc\": \"<字段描述>\",\n        \"fieldType\": \"<字段类型>\"\n      }\n    ],\n    \"seriesList\": [\n      {\n        \"name\": \"<数据序列名称>\",\n        \"pointList\": [\n          {\n            \"dimensionList\": [{\"fieldId\": \"<维度字段ID>\", \"value\": \"<值>\"}],\n            \"quotaList\": [{\"fieldId\": \"<指标字段ID>\", \"value\": \"<值>\"}]\n          }\n        ]\n      }\n    ]\n  }\n}",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": {
+                "_refFlat": "common/response/simpleResult<StatisticsEntity>"
+            }
+        },
+        {
+            "uri": "/north/asset/queryCondition/v2/create",
+            "method": "POST",
+            "title": "创建查询条件",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "example": null,
+                    "desc": "板块名称",
+                    "required": true
+                },
+                {
+                    "name": "condition",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/asset/queryCondition/v2/delete",
+            "method": "DELETE",
+            "title": "删除查询条件",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "queryConditionIds",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/asset/queryCondition/v2/queryAll",
+            "method": "GET",
+            "title": "查询(全部)查询条件",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": {
+                "_refFlat": "common/response/arrayResult<QueryConditionEntity>"
+            }
+        },
+        {
+            "uri": "/north/asset/v2/delete",
+            "method": "DELETE",
+            "title": "删除资产",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "assetIds",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/asset/v2/operate",
+            "method": "POST",
+            "title": "资产操作",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postOrDeleteMethod/simpleUpdate"
+            },
+            "request": [
+                {
+                    "name": "assetIds",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                },
+                {
+                    "name": "action",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作:block表示阻断,unblock表示取消阻断,powerOn表示开机,powerOff表示关机",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/voidResult"
+            }
+        },
+        {
+            "uri": "/north/asset/v2/export",
+            "method": "POST",
+            "title": "导出资产",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "assetIds",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产ID,唯一,多个使用英文逗号分隔",
+                    "required": true
+                }
+            ],
+            "response": null
+        },
+        {
+            "uri": "/north/asset/v2/exportAll",
+            "method": "POST",
+            "title": "导出(全部)资产",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": null
+        },
+        {
+            "uri": "/north/asset/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询资产",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "condition",
+                    "type": "string",
+                    "example": null,
+                    "desc": "查询条件",
+                    "required": false
+                },
+                {
+                    "name": "networkSegmentId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "关联网段ID",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<AssetEntity>"
+            }
+        },
+        {
+            "uri": "/north/asset/detail/basicInfo/v2/query",
+            "method": "POST",
+            "title": "查询资产的基本信息详情",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "assetId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产ID",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/arrayResult<FieldEntity>"
+            }
+        },
+        {
+            "uri": "/north/asset/detail/extBasicInfo/v2/query",
+            "method": "POST",
+            "title": "查询资产的扩展基本信息详情",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "assetId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产ID",
+                    "required": true
+                },
+                {
+                    "name": "type",
+                    "type": "string",
+                    "example": null,
+                    "desc": "扩展类型:software表示安装的软件列表,patch表示安装的补丁列表,network表示网络接口信息,user表示用户列表,disk表示硬盘分区列表,process表示运行进程列表,service表示服务列表,share表示共享列表,hardware表示安装的硬件信息",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/simpleResult<AssetExtBasicInfoEntity>"
+            }
+        },
+        {
+            "uri": "/north/asset/detail/datasourceInfo/v2/query",
+            "method": "POST",
+            "title": "查询资产的数据源信息详情",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "assetId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产ID",
+                    "required": true
+                },
+                {
+                    "name": "assetFrom",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产的数据源来源",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/simpleResult<AssetDatasourceInfoEntity>"
+            }
+        },
+        {
+            "uri": "/north/asset/detail/onofflineInfo/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询资产的在线/离线信息详情",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "assetId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产ID",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<AssetOnofflineInfoEntity>"
+            }
+        },
+        {
+            "uri": "/north/asset/detail/changeHistoryInfo/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询资产的变更历史详情",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "assetId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产ID",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<AssetChangeHistoryInfoEntity>"
+            }
+        },
+        {
+            "uri": "/north/asset/detail/secuirtyInfo/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询资产的安全合规信息详情",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "assetId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产ID",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<AssetSecuirtyInfoEntity>"
+            }
+        },
+        {
+            "uri": "/north/asset/v2/queryNetworkSegmentStatistics",
+            "method": "GET",
+            "title": "按网段查询资产统计信息",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "networkSegmentId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "关联网段ID",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/simpleResult<NetworkSegmentStatisticsEntity>"
+            }
+        },
+        {
+            "uri": "/north/asset/sync/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询(全量)资产",
+            "desc": "用于资产同步,一个接口分页返回所有资产的全量详情",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "searchRecordTime",
+                    "type": "string",
+                    "example": "2023-02-22 05:14:21 ~ 2023-03-31 11:14:21",
+                    "desc": "搜索过滤条件:上报时间/更新时间,格式\"{开始时间} ~ {结束时间}\",时间格式为\"yyyy-MM-dd HH:mm:ss\",为空表示不限制",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<SyncAssetDetailEntity>"
+            }
+        },
+        {
+            "uri": "/north/asset/sync/v2/queryDetail",
+            "method": "GET",
+            "title": "查询资产(全量)详情",
+            "desc": "用于资产同步,一个接口返回某个资产的全量详情",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "assetId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "资产ID",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/simpleResult<SyncAssetDetailEntity>"
+            }
+        },
+        {
+            "uri": "/north/alarm/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询告警",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "searchAlarmName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:告警名称",
+                    "required": false
+                },
+                {
+                    "name": "searchQueryConditionName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:查询条件名称",
+                    "required": false
+                },
+                {
+                    "name": "searchRecordTime",
+                    "type": "string",
+                    "example": "2023-02-22 05:14:21 ~ 2023-03-31 11:14:21",
+                    "desc": "搜索过滤条件:上报时间,格式\"{开始时间} ~ {结束时间}\",时间格式为\"yyyy-MM-dd HH:mm:ss\",为空表示不限制",
+                    "required": false
+                },
+                {
+                    "name": "searchIp",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:IP地址",
+                    "required": false
+                },
+                {
+                    "name": "searchDeviceType",
+                    "type": "integer",
+                    "example": null,
+                    "desc": "搜索过滤条件:资产类型",
+                    "required": false
+                },
+                {
+                    "name": "searchGroupCode",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:组织架构编码",
+                    "required": false
+                },
+                {
+                    "name": "searchKeyword",
+                    "type": "string",
+                    "example": null,
+                    "desc": "模糊搜索关键字,在alarmName和queryConditionName字段中搜索,过滤结果",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<AlarmEntity>"
+            }
+        },
+        {
+            "uri": "/north/alarm/sync/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询(全量)告警",
+            "desc": "用于告警同步,一个接口分页返回所有告警的全量详情",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "searchRecordTime",
+                    "type": "string",
+                    "example": "2023-02-22 05:14:21 ~ 2023-03-31 11:14:21",
+                    "desc": "搜索过滤条件:上报时间/更新时间,格式\"{开始时间} ~ {结束时间}\",时间格式为\"yyyy-MM-dd HH:mm:ss\",为空表示不限制",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<SyncAlarmDetailEntity>"
+            }
+        },
+        {
+            "uri": "/north/alarm/sync/v2/queryDetail",
+            "method": "GET",
+            "title": "查询告警(全量)详情",
+            "desc": "用于告警同步,一个接口返回某个告警的全量详情",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "alarmId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "告警ID",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/simpleResult<SyncAlarmDetailEntity>"
+            }
+        },
+        {
+            "uri": "/north/log/operation/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询操作日志",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "searchUserName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:用户名称",
+                    "required": false
+                },
+                {
+                    "name": "searchOpName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:功能名称",
+                    "required": false
+                },
+                {
+                    "name": "searchOpType",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:操作类型",
+                    "required": false
+                },
+                {
+                    "name": "searchModuleName",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:模块名称",
+                    "required": false
+                },
+                {
+                    "name": "searchOpResult",
+                    "type": "string",
+                    "example": null,
+                    "desc": "搜索过滤条件:操作结果",
+                    "required": false
+                },
+                {
+                    "name": "searchRecordTime",
+                    "type": "string",
+                    "example": "2023-02-22 05:14:21 ~ 2023-03-31 11:14:21",
+                    "desc": "搜索过滤条件:上报时间/操作时间,格式\"{开始时间} ~ {结束时间}\",时间格式为\"yyyy-MM-dd HH:mm:ss\",为空表示不限制",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<LogOperationEntity>"
+            }
+        },
+        {
+            "uri": "/north/log/operation/v2/exportAll",
+            "method": "POST",
+            "title": "导出(全部)操作日志",
+            "desc": "这里是接口的详细说明",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": null,
+            "response": null
+        },
+        {
+            "uri": "/north/log/operation/sync/v2/queryPagedList",
+            "method": "POST",
+            "title": "分页查询(全量)操作日志",
+            "desc": "用于操作日志同步,一个接口分页返回所有操作日志的全量详情",
+            "headers": {
+                "_refFlat": "common/header/postMethod/pagedQuery"
+            },
+            "request": [
+                {
+                    "name": "searchRecordTime",
+                    "type": "string",
+                    "example": "2023-02-22 05:14:21 ~ 2023-03-31 11:14:21",
+                    "desc": "搜索过滤条件:上报时间/更新时间,格式\"{开始时间} ~ {结束时间}\",时间格式为\"yyyy-MM-dd HH:mm:ss\",为空表示不限制",
+                    "required": false
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/pagedResult<SyncLogOperationEntity>"
+            }
+        },
+        {
+            "uri": "/north/log/operation/sync/v2/queryDetail",
+            "method": "GET",
+            "title": "查询操作日志(全量)详情",
+            "desc": "用于操作日志同步,一个接口返回某个操作日志的全量详情",
+            "headers": {
+                "_refFlat": "common/header/getMethod/simpleQuery"
+            },
+            "request": [
+                {
+                    "name": "logOperationId",
+                    "type": "string",
+                    "example": null,
+                    "desc": "操作日志ID",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/simpleResult<SyncLogOperationEntity>"
+            }
+        },
+        {
+            "uri": "/north/support/v2/auth",
+            "method": "GET",
+            "title": "验证",
+            "desc": "这是验证接口,appKey和IP验证通过后返回token,并且凭token调用其他的接口,调用方在token过期之前再次验证获取新的token",
+            "headers": [
+                {
+                    "_ref": "common/header/timestamp"
+                }
+            ],
+            "request": [
+                {
+                    "name": "appKey",
+                    "type": "string",
+                    "example": null,
+                    "desc": "授权凭证key",
+                    "required": true
+                }
+            ],
+            "response": {
+                "_refFlat": "common/response/simpleResult<TokenEntity>"
+            }
+        }
+    ]
+}
