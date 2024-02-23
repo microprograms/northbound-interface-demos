@@ -1,0 +1,19 @@
+deployment:
+  name: uecm-inspector # 部署名
+  image: uecm-inspector # 镜像版本
+  imageTag: 6.0.0 #镜像tag
+  imagePullPolicy: IfNotPresent # 镜像拉取策略
+  replicas: 1 # 副本数量
+
+service:
+  name: uecm-inspector # Service服务名
+  ##
+  # 服务类型（网络类型），可选值如下
+  # LoadBalancer 负载均衡，集群外可访问
+  # ClusterIP 仅限集群内部访问
+  ##
+  type: NodePort # Service网络类型
+  protocol: UDP # Service服务的协议
+  port: 161 # Service服务端口
+  targetPort: 1161 # POD端口
+  nodePort: 30161 # Service服务的nodePort端口

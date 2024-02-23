@@ -1,0 +1,97 @@
+--
+-- This is FriendlySNMP UECM-INSPECTOR-MIB
+--
+
+UECM-INSPECTOR-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    enterprises, MODULE-IDENTITY, OBJECT-TYPE FROM SNMPv2-SMI
+    DisplayString, TEXTUAL-CONVENTION FROM SNMPv2-TC;
+
+-- Module Identity
+------------------
+uecmInspector MODULE-IDENTITY
+    -- Date Format is "YYYYMMDDhhmmZ"
+    LAST-UPDATED "202208300000Z"
+    ORGANIZATION "深圳万物安全科技有限公司"
+    CONTACT-INFO "support@iottepa.com"
+    DESCRIPTION  "UECM 巡检"
+    -- Multiple pairs revision/description allowed
+    REVISION     "202208300000Z"
+    DESCRIPTION  "UECM 巡检"
+    -- 1.3.6.1.4.1.29091.10
+    ::= { friendlySNMP 10 }
+
+-- Enterprise OIDs
+------------------
+friendlySNMP OBJECT IDENTIFIER ::= { enterprises 29091 }
+
+-- Top-level tree (sections)
+----------------------------
+host OBJECT IDENTIFIER ::= { uecmInspector 1 }
+cluster OBJECT IDENTIFIER ::= { uecmInspector 2 }
+middleware OBJECT IDENTIFIER ::= { uecmInspector 3 }
+microservice OBJECT IDENTIFIER ::= { uecmInspector 4 }
+other OBJECT IDENTIFIER ::= { uecmInspector 5 }
+
+-- Scalar GET values (宿主机巡检)
+--------------------------------
+hostTime OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "宿主机巡检：时间"
+    ::= { host 1 }
+hostMemory OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "宿主机巡检：内存"
+    ::= { host 2 }
+hostDisk OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "宿主机巡检：磁盘"
+    ::= { host 3 }
+
+-- Scalar GET values (集群巡检)
+------------------------------
+clusterCoredns OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "集群巡检：CoreDNS"
+    ::= { cluster 1 }
+
+-- Scalar GET values (中间件巡检)
+--------------------------------
+middlewareTidb OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "中间件巡检：TiDB"
+    ::= { middleware 1 }
+middlewareRabbitmq OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "中间件巡检：RabbitMQ"
+    ::= { middleware 2 }
+middlewareRedis OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "中间件巡检：Redis"
+    ::= { middleware 3 }
+middlewareMongodb OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "中间件巡检：MongoDB"
+    ::= { middleware 4 }
+middlewareXxljob OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "中间件巡检：XXL-JOB"
+    ::= { middleware 5 }
+middlewareNacos OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "中间件巡检：Nacos"
+    ::= { middleware 6 }
+
+-- Scalar GET values (微服务巡检)
+--------------------------------
+microserviceAuthlocal OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "auth-local"
+    ::= { microservice 1 }
+microserviceChangeCounterfeit OBJECT-TYPE
+    SYNTAX DisplayString MAX-ACCESS read-only STATUS current
+    DESCRIPTION "change-counterfeit"
+    ::= { microservice 2 }
+
+END
